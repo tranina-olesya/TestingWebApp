@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}Выбор предмета{% endblock %}
+{% block head %}
+	{{ super() }}
+	<style>
+	</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js">
+		
+	</script>
+{% endblock %}
+{% block content %}
+	<form action="" method="post">
+		<div class=content-block>
+			<input type="input" name="test_name">
+		</div>
+		<div class="qu">
+			<div class=content-block>
+				<div class="question"> 
+					<div class=question-type>
+						<p><input type="radio" name="question-type" value="ONE_ANSWER" checked> Один вариант ответа</p>
+						<p><input type="radio" name="question-type" value="MANY_ANSWERS"> Несколько вариантов ответа</p>
+						<p><input type="radio" name="question-type" value="INPUT_ANSWER"> Без вариантов ответа</p>
+					</div>
+					Количество вариантов<input type="number" min="1" value="1" id="counter">
+					<p><button id="add" type="button">Добавить вариант ответа</button></p>
+					<div id="answer-choises">
+						<p id="1"><input class="answer" type="radio" name="answer" id="i1" checked><input type="text" id="1"></p>
+					</div>
+					<script>
+						function add(){
+							var need = $('#counter').val();
+							var have = $('.answer').length;
+							var type = $('input[name=question-type]:checked').val();
+							var a;
+							if (type == 'ONE_ANSWER')
+								a = 'radio';
+							else if (type == 'MANY_ANSWERS')
+								a = 'checkbox';
+							if (have < need)
+							{
+								for (var i = have+1; i<=need; i++)
+								{
+									$('#answer-choises').append('<p class="answer" id="' + i +'"><input type="' + a + '" name="answer" id="i' + i + '"><input type="text" id="' + i + '"></p>');
+								}
+					        }
+					        else
+					        {
+					        	for (var i = have; i>need; i--)
+								{
+					        		$('p#'+ i).remove();
+								}
+					        }
+					    }
+						$('#counter').change(add);
+					    $('.question-type').click(function(){
+
+					    	var type = $('input[name=question-type]:checked').val();
+					    	if (type == 'INPUT_ANSWER')
+					    	{
+					    		$('#counter').prop('disabled', true);
+					    		$('#counter').prop('value', '1');
+					    		$('#i1').prop('type', 'radio');
+					    		$('#i1').prop('checked', 'true');
+					    	}
+					    	else
+					    	{
+					    		$('#counter').prop('disabled', false);
+					    		var b;
+								var have = $('.answer').length;
+								if (type == 'ONE_ANSWER')
+									b = 'radio';
+								else if (type == 'MANY_ANSWERS')
+									b = 'checkbox';
+
+					    		for (var i = 1; i<=have; i++)
+								{
+									$('#i' + i).prop('type', b);
+								}
+					    	}
+					    	add();
+					    });
+					</script>
+				</div>
+		</div>
+		<p><button id="add2" type="button">Добавить вопрос</button></p>
+		<script type="text/javascript">
+			$('#add2').click(function(){
+				alert($('.qu').text());
+				$('.qu').append($('.content-block'));
+			});
+		</script>
+		<input type="submit" name="">
+	</form>
+{% endblock %}

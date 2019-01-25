@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}{{test.name}}{% endblock %}
+{% block head %}
+	{{ super() }}
+  <title>{{test.name}}</title>
+	<style>
+	.max-score, .attempts-count {
+		font-size: 20px;
+		padding-bottom: 10px;
+	}
+	.question-number{
+		font-size: 18px;
+	    padding-bottom: 10px;
+	    font-style: italic;
+	}
+	input {
+		border-radius: 13px;
+	    height: 30px;
+	    width: 197px;
+	    margin: 10px 0;
+	    background: #f7f7f7;
+	    border-color: #aaaaaa;
+	    border-style: solid;
+	    font-size: 15px;
+	}
+	.attempts li{
+		font-style: italic;
+	    font-size: 18px;
+		color: #5d0095;
+		padding: 5px 0; 
+	}
+	</style>
+	<script>
+		
+	</script>
+{% endblock %}
+{% block content %}
+	<div class=content-block>
+		<div class="max-score">Максимальный балл: {{max_score}} %</div>
+		<div class="question-number">Количество вопросов: {{question_number}}</div>
+		<a href="{{ url_for('attempt', test_id=test.id) }}""><input type="submit" name="start-test" value="Пройти заново"></a>
+	</div>
+	<div class=content-block>
+		<div class="attempts-count">Попытки: {{attempts_count}}</div>
+		<div class="attempts">
+		<ul>
+			{% for attempt in attempts %}	
+				<a href={{ url_for('attempt_view', attempt_id=attempt.id) }}><li>
+					<div class="result">Результат: {{attempt.percent_score}} %</div>
+				</li></a>
+			{% endfor %}
+		</ul>
+	</div>
+{% endblock %}

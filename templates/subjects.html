@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Выбор предмета{% endblock %}
+{% block head %}
+	{{ super() }}
+	<title>Выбор предмета</title>
+	<style>
+	.content-block { 
+	    width: 21vw; 
+	    height: 25vh; 
+	    min-height: 70px;
+	    min-width: 320px;
+	    float: left;
+	    margin: 10px 0 5px 20px;
+	    overflow: hidden;
+	}
+	.bar {
+	  width: 100%;
+	  height: 20px;
+	  margin: 10px 0;
+	  background: #eee;
+	  border-radius: 25px;
+	}
+
+	.progress__bar {
+	  height: 20px;
+	  width: 0%;
+	  background: #f6f8;
+	  border-radius: 25px;
+	}
+
+	.progress {
+		margin-right: 10px;
+		float: right;
+		font-size: 22px;
+	}
+	.subject-name {
+		font-size: 22px;
+		text-decoration: none;
+		color: #5d0095;
+	}
+	.tests-count, .completed-tests-count
+	{
+		padding: 10px 0 0 5px;
+		font-size: 18px;
+	}
+	</style>
+	
+{% endblock %}
+{% block content %}
+	{% for subj in subjects %}
+	<div class="content-block">
+		<div class="progress"> {{subj.progress}} %</div>
+		<div class="subject-name">
+			<a href={{ url_for('tests_view', subject_id=subj.id) }}> 
+				{{subj.name}} 
+			</a>
+		</div>
+		
+		<div class="bar">
+			<div id="{{ subj.id }}" class="progress__bar"></div>
+			<script>
+				progress( "{{ subj.id }}" , {{subj.progress}});
+			</script>
+		</div>
+		<div class="tests-count"> Доступно тестов: {{subj.tests_count}} </div>
+		<div class="completed-tests-count"> Завершено тестов: {{subj.completed_tests_count}} </div>
+	</div> 
+	{% endfor %}
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}{{subject.name}}{% endblock %}
+{% block head %}
+	{{ super() }}
+	<title>{{subject.name}}</title>
+	<style>
+	.bar {
+	  width: 100%;
+	  height: 20px;
+	  background: #eee;
+	  border-radius: 25px;
+	}
+
+	.progress__bar {
+	  top: 0;
+	  
+	  height: 20px;
+	  background: #f6f8;
+	  border-radius: 25px;
+	}
+	.test-name {
+		font-size: 21px;
+
+	}
+	.attempts {
+		margin: 5px 0 10px 0;
+		font-size: 18px;
+	}
+	.test-name a {
+	color: #5d0095;
+	}
+	.progress {
+		float: right;
+		font-size: 22px;
+		margin: 0 10px 0 0;
+	}
+	</style>
+	<script>
+		
+	</script>
+{% endblock %}
+{% block content %}
+	{% for test in tests %}
+		<div class=content-block>
+			
+			<div class=test-name> <a href="{{ url_for('attempts_view', test_id=test.id) }}">{{ test.name }}  </a></div>
+			<div class="progress"> {{test.max_score}} %</div>
+			<div class="attempts">Попыток: {{test.attempts_count}}</div>
+			<div class="bar">
+				<div id="{{ test.id }}" class="progress__bar"></div>
+				<script>
+					progress( "{{ test.id }}" , {{test.max_score}});
+				</script>
+			</div>
+		</div>
+	{% endfor %}
+{% endblock %}

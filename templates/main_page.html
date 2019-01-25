@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block head %} 
+	{{ super() }}
+  <title>Главная</title>
+  <style type="text/css">
+  	.form-element-button {
+		border-radius: 13px;
+	    height: 30px;
+	    margin: 10px 0;
+	    width: 100px;
+	    background: #f7f7f7;
+	    border-color: #aaaaaa;
+	    border-style: solid;
+	    font-size: 15px;
+	}
+	.form-element input
+	{
+		border-radius: 13px;
+	    margin: 10px 0;
+	    height: 20px;
+	    background: #fdfdfd;
+	    border-color: #aaaaaa;
+	    border-style: solid;
+	    font-size: 15px;
+	}
+  </style>
+{% endblock %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+	<div class="content-block">
+	{% if logged_in %}
+       <a>Вы вошли под именем {{user.login}} ({{user.full_name}}). Это не Вы? </a><a href="/logout">Выйти.</a>
+      {% else %}
+       {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul id="flashed">
+        {% for message in messages %}
+        <span class="error">{{message}}</span><br>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% endwith %}
+
+      <form action="" method="post" name="login">
+        {{form.hidden_tag()}}
+        <p class="form-element">
+          Логин:<br>
+          {{form.login(size=50)}}
+          {% for error in form.errors.login %}
+          <span class="error">[{{error}}]</span>
+          {% endfor %}<br>
+        </p>
+        <p class="form-element">
+          Пароль:<br>
+          {{form.password(size=50)}}
+          {% for error in form.errors.password %}
+          <span class="error">[{{error}}]</span>
+          {% endfor %}<br>
+        </p>
+        <input class="form-element-button" size="200" type="submit" value="Войти">
+      </form><br>
+      
+      <a>Еще нет аккаунта? </a><a href="/register">Зарегистрироваться.</a>
+      {% endif %}
+   	</div>
+{% endblock %}

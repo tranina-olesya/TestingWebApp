@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}{{test}}{% endblock %}
+{% block head %}
+	{{ super() }}
+	<title>{{test}}</title>
+	<style>
+	.question-text {
+		font-size: 18px;
+	}
+	.submit {
+		width: -webkit-fill-available;
+    	margin: 10px 20px 5px 20px;
+	}
+	</style>
+	<script>
+		
+	</script>
+{% endblock %}
+{% block content %}
+	<form action="" method="post">
+		{% for question in questions %}
+			<div class=content-block>
+				<div class=question-text>{{ question.question_text }}  </div>
+				{% if question.question_type == "ONE_ANSWER" %}
+					<div class="answers">
+						{% for answer in question.answers %}
+							<p><input type="radio" name="{{question.id}}" value="{{answer.id}}"> {{ answer.answer_text }}</p>
+						{% endfor %}
+					</div>
+				{% elif question.question_type == "MANY_ANSWERS" %}
+					<div class="answers">
+						{% for answer in question.answers %}
+							<p><input type="checkbox" name="{{question.id}}" value="{{answer.id}}"> {{ answer.answer_text }}</p>
+						{% endfor %}
+					</div>
+				{% elif question.question_type == "INPUT_ANSWER" %}
+					<div class="answers">
+						<p><input type="input" name="{{question.id}}" value=""></p>
+					</div>
+				{% endif %}
+			</div>
+		{% endfor %}
+		<input class="submit" type="submit">
+	</form>
+{% endblock %}

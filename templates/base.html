@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  {% block head %}
+  <style type="text/css">
+    body{
+      margin: 0px;
+      font-family: sans-serif;
+      background-color: #f4f4f4;
+    }
+    .title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #ffffff;
+      position: fixed;
+      background: linear-gradient(30deg, #880075, #6F7EB3);
+      border-bottom: 1px solid #5c5c5c;
+      height: 7vh;
+      width: 100%;
+      top: 0;
+      font-size: 25px;
+      font-weight: 600;
+    }
+    .content
+    {
+      margin-top: 7vh;
+      width: 85%;
+      float: right;
+    }
+
+    .content-block
+    {
+      margin: 10px 20px 5px 20px;
+      padding-left: 35px;
+      border: 1px solid #bdbdbd;
+      border-radius: 5px;
+      background-color: #fbfbfb;
+      padding: 20px 40px;
+    }
+    .menu::-webkit-scrollbar { width: 0; }
+    .menu {
+      position: fixed;
+      left: 0;
+      top: 7vh;
+      margin: 10px 0 0 5px;
+      overflow-y:auto;
+      width: 15%;
+      height: 85vh;
+      display: block;
+      background-color: #efefef;
+      border: 1px solid #b8b8b8;
+      border-spacing: 2px;
+      border-radius: 5px;
+    }
+
+    a {
+      text-decoration: none;
+    }
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .menu-list a {
+      padding: 17px 20px;
+      display: block;
+      transition: 0.5s;
+      border-bottom: 1px solid #b8b8b8;
+      color: #505050;
+      background-color: #efefef;
+      width: inherit;
+      
+    }
+    .menu a:hover {
+      background-color: #ddd;
+      padding: 17px 10px 17px 30px;
+    }
+    .menu-item {
+      position: relative;
+    }
+    .menu-drop {
+      display: none;
+    }
+    .menu-item:hover .menu-drop {
+      display: block;
+    }
+    .menu-drop li a{
+      background: #fefefe;
+    }
+    .menu-drop li:hover a{
+      background: #ddd;
+    }
+  </style>
+  <script>
+    function progress (id, w) {
+          document.getElementById(id).style.width = w + "%";
+    };
+  </script>
+  {% endblock %}
+</head>
+<body>
+  <div class="menu">
+    <ul class="menu-list">
+      <li><a href="/">Главная</a></li>
+      <li class="menu-item"><a href="/subjects">Выбор предмета</a>
+        <ul class="menu-drop">
+          {% for subj in subjects %}
+            <li><a href={{ url_for('tests_view', subject_id=subj.id) }}> {{subj.name}}</a></li>
+          {% endfor %}
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="title">
+    {% block title %}
+    {% endblock %}
+  </div>
+
+  <div class="content">
+      {% block content %}
+      {% endblock %}
+  </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Выбор предмета{% endblock %}
+{% block head %}
+	{{ super() }}
+	<style>
+
+	</style>
+	<script>
+		
+	</script>
+{% endblock %}
+{% block content %}
+	<form form action="" method="post">
+		{% for question in questions %}
+			<div class=content-block>
+				<div class=question-text>{{ question.question_text }}  </div>
+				{% if question.question_type == "ONE_ANSWER" %}
+					<div class="answer">
+						{% for answer in question.answers %}
+							<input type="radio" name="{{question.id}}" value="{{answer.id}}"> {{ answer.answer_text }}
+						{% endfor %}
+					</div>
+				{% elif question.question_type == "MANY_ANSWERS" %}
+					<div class="answer">
+						{% for answer in question.answers %}
+							<input type="checkbox" name="{{question.id}}" value="{{answer.id}}"> {{ answer.answer_text }}
+						{% endfor %}
+					</div>
+				{% elif question.question_type == "INPUT_ANSWER" %}
+					<div class="answer">
+						<input type="input" name="{{question.id}}" value="">
+					</div>
+				{% endif %}
+			</div>
+		{% endfor %}
+		<input type="submit">
+	</form>
+{% endblock %}
