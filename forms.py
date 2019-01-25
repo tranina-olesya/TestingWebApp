@@ -3,12 +3,12 @@ from wtforms import StringField, PasswordField, TextAreaField, IntegerField
 from wtforms.validators import DataRequired, Length, EqualTo
 
 
-class LoginForm(FlaskForm):
+class LoginForm(Form):
     login = StringField('login', validators=[DataRequired()])
     password = PasswordField('password', validators=[DataRequired()])
 
 
-class RegisterForm(FlaskForm):
+class RegisterForm(Form):
     login = StringField('login', validators=[DataRequired(), Length(min=3)])
     first_name = StringField('first_name', validators=[DataRequired(), Length(min=2)])
     last_name = StringField('last_name', validators=[DataRequired(), Length(min=2)])
